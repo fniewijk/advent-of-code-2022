@@ -5,7 +5,6 @@ fn main() {
     three_a();
     
     three_b();
-
 }
 
 fn three_b() {
@@ -14,18 +13,14 @@ fn three_b() {
         .expect("Should have been able to read the file");
 
     let backpacks: Vec<&str> = contents.split("\n").collect();
-    let gnomes = backpacks.len() as i128;
+    let gnomes = backpacks.len();
     let mut total: i32 = 0;
     for index in 0..gnomes {
 
         if index % 3 == 0 {
-            let mut bitmask_one: u64 = 0;
-            let mut bitmask_two: u64 = 0;
-            let mut bitmask_three: u64 = 0;
-
-            bitmask_one |= get_bitmask(backpacks[index as usize]);
-            bitmask_two |= get_bitmask(backpacks[(index + 1) as usize]);
-            bitmask_three |= get_bitmask(backpacks[(index + 2) as usize]);
+            let bitmask_one: u64 = get_bitmask(backpacks[index]);
+            let bitmask_two: u64 = get_bitmask(backpacks[index + 1]);
+            let bitmask_three: u64 = get_bitmask(backpacks[index + 2]);
 
             let bitmask_total = bitmask_one & bitmask_two & bitmask_three;
             
@@ -117,14 +112,7 @@ fn three_a () {
         let bitmask = bitmask_left & bitmask_right;
         // println!("> bitmask : {:?}", bitmask.to_be_bytes());
 
-        let mut letter_value = 1;
-        for bit_index  in 0..52 {
-            if (bitmask >> bit_index) % 2 == 1 {
-                total += letter_value;
-            }
-
-            letter_value = letter_value + 1;
-        }
+        total += get_score(bitmask);
         // println!("> Subtotal : {:?}", total);
     }
     println!("> Result A: {:?}", total);
