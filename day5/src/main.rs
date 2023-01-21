@@ -2,7 +2,6 @@ use std::fs;
 use math::round::ceil;
 use regex::Regex;
 
-
 fn main() {
 
     const FILE_PATH:&'static str = "./src/input.txt";
